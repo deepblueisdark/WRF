@@ -1,5 +1,6 @@
 #!/bin/bash
-## WRF installation with parallel process.
+
+# WRF installation with parallel process.
 # Download and install required library and data files for WRF.
 # Tested in Ubuntu 20.04 LTS
 # Built in 64-bit system
@@ -9,43 +10,72 @@
 #Special thanks to  Youtube's meteoadriatic and GitHub user jamal919
 
 #############################basic package managment############################
-##sudo apt update
-#sudo apt upgrade
-#sudo apt install gcc gfortran g++ libtool automake autoconf make m4 default-jre default-jdk csh ksh git ncview ncl-ncarg time 
+##sudo apt update                                                                                                   
+#sudo apt upgrade                                                                                                    
+#sudo apt install gcc gfortran g++ libtool automake autoconf make m4 default-jre default-jdk csh ksh git ncview ncl-ncarg   
+
 
 #############################basic package managment############################
-sudo dnf update
-sudo dnf upgrade
-sudo dnf install gcc gfortran g++ libtool automake autoconf make m4 default-jre default-jdk csh ksh git
-sudo dnf install  ncview ncl-ncarg  
-sudo dnf install csh  time
+sudo dnf update                                                                                                   
+sudo dnf upgrade                                                                                                    
+sudo dnf install gcc gfortran g++ libtool 
+sudo dnf install automake autoconf make m4 
+sudo dnf default-jre default-jdk 
+sudo dnf install csh ksh time
+sudo dnf install git 
+sudo dnf install ncview ncl-ncarg  
+sudo dnf install cmake 
 
+#####################  PROMPT CONTROLE ########
+#
+#
+#  se PROMPOOK=1  acada instalacao pede para pressionar um teccla
+#
+#
 PROMPTOK=1
 if [ "$PROMPTOK" -eq 1 ]; then
 read -p "pressione para continuar "
 fi
 
-###################################
 
-OPCAO=( 0 ####  criar diretorios
-        0 ### fazer downloads
-        0 #zlib
-        0 # MPICH
-        0 # LIBPNG
-		0 # JASPER
-		0 # HDF5 FOR NETCDF4
-		0 ##NETCDF-C
-		0 ##NETCDF-FORTRAN
-		0 ## ARWPOST
-		0 ## OPENGRADS
-		1 ## WRF 4.3
-		0 ## WPSV4.3
-		0 ## GEOG INSTALL
-		)
+################################### OPCOES #############
+#
+# SE OPCOES =1  IRA EXECUTAR A ESTALACAO DE CADA BIBLIOTECA 0 NÃO INSTALA. 
 
+
+OPCAO=( 1 ####  criar diretorios
+        1 ### fazer downloads 
+        1 ### zlib 
+        1 ### MPICH 
+        1 ##LIBPNG
+		1 ## JASPER
+		1 ## HDF5 FOR NETCDF4 
+		1 ##NETCDF-C
+		1 ##NETCDF-FORTRAN
+		1 ## ARWPOST
+		1 ## OPENGRADS
+		1 ## WRF 4.3 
+		1 ## WPSV4.3 
+		1 ## GEOG INSTALL 
+		) 
+ 
 ######################################
 
+#
+#     LOCAL DE INSTALACAO 
+#
+#
+
 export HOME="/home/modelos/MODELOS/"
+
+
+#
+#
+#
+#
+#
+
+
 
 
 
@@ -64,6 +94,13 @@ mkdir Libs/NETCDF
 mkdir Libs/MPICH
 fi
 
+
+
+
+
+
+
+
 ##############################Downloading Libraries############################
 if [ "${OPCAO[1]}" -eq 1 ]; then
 cd Downloads
@@ -76,11 +113,12 @@ wget -c http://www.mpich.org/static/downloads/3.4.1/mpich-3.4.1.tar.gz
 wget -c https://download.sourceforge.net/libpng/libpng-1.6.37.tar.gz
 wget -c https://www.ece.uvic.ca/~frodo/jasper/software/jasper-1.900.1.zip
 wget -c https://sourceforge.net/projects/opengrads/files/grads2/2.2.1.oga.1/Linux%20%2864%20Bits%29/opengrads-2.2.1.oga.1-bundle-x86_64-pc-linux-gnu-glibc_2.17.tar.gz
-fi
+fi 
 
 if [ "$PROMPTOK" -eq 1 ]; then
 read -p "pressione para continuar "
 fi
+
 
 #############################Compilers############################
 export DIR=$HOME/WRF/Libs
@@ -88,6 +126,7 @@ export CC=gcc
 export CXX=g++
 export FC=gfortran
 export F77=gfortran
+
 
 #############################zlib############################
 if [ "${OPCAO[2]}" -eq 1 ]; then
@@ -102,6 +141,7 @@ fi
 if [ "$PROMPTOK" -eq 1 ]; then
 read -p "pressione para continuar "
 fi
+
 
 ####################################MPICH#########################################
 export fallow_argument=-fallow-argument-mismatch
@@ -120,9 +160,11 @@ make install
 make check
 fi
 
+
 if [ "$PROMPTOK" -eq 1 ]; then
 read -p "pressione para continuar "
 fi
+
 
 #############################libpng############################
 if [ "${OPCAO[4]}" -eq 1 ]; then
@@ -139,6 +181,7 @@ fi
 if [ "$PROMPTOK" -eq 1 ]; then
 read -p "pressione para continuar "
 fi
+
 
 #############################JasPer############################
 if [ "${OPCAO[5]}" -eq 1 ]; then
@@ -164,9 +207,10 @@ cd $HOME/WRF/Downloads
 tar -xvzf hdf5-1.12.0.tar.gz
 cd hdf5-1.12.0
 ./configure --prefix=$DIR/grib2 --with-zlib=$DIR/grib2 --enable-hl --enable-fortran
-make
+make 
 make install
 fi
+
 
 export HDF5=$DIR/grib2
 export LD_LIBRARY_PATH=$DIR/grib2/lib:$LD_LIBRARY_PATH
@@ -183,7 +227,7 @@ tar -xzvf netcdf-c-4.9.2.tar.gz
 cd netcdf-c-4.9.2/
 export CPPFLAGS=-I$DIR/grib2/include 
 export LDFLAGS=-L$DIR/grib2/lib
-./configure --prefix=$DIR/NETCDF --disable-dap --disable-byterange
+./configure --prefix=$DIR/NETCDF --disable-dap --disable-byterange --disable-libxml2 
 make 
 make install
 fi
@@ -294,6 +338,8 @@ cd $HOME/WRF/Downloads
 wget -c https://github.com/wrf-model/WPS/archive/v4.3.tar.gz -O WPS-4.3.tar.gz
 tar -xvzf WPS-4.3.tar.gz -C $HOME/WRF
 cd $HOME/WRF/WPS-4.3
+export FCFLAGS=$fallow_argument
+export FFLAGS=$fallow_argument
 ./configure #Option 3 for gfortran and distributed memory 
 ./compile
 fi
@@ -304,8 +350,7 @@ read -p "pressione para continuar "
 fi
 
 
-###################
-##### Static Geography Data inc/ Optional ####################
+######################## Static Geography Data inc/ Optional ####################
 # http://www2.mmm.ucar.edu/wrf/users/download/get_sources_wps_geog.html
 # Double check if Irrigation.tar.gz extracted into WPS_GEOG folder
 # IF it didn't right click on the .tar.gz file and select 'extract here'
@@ -333,8 +378,7 @@ tar -xvf lake_depth.tar.bz2 -C $HOME/WRF/GEOG/WPS_GEOG
 fi 
 
 ## export PATH and LD_LIBRARY_PATH
-echo "export P
-ATH=$DIR/bin:$PATH" >> ~/.bashrc
+echo "export PATH=$DIR/bin:$PATH" >> ~/.bashrc
 echo "export LD_LIBRARY_PATH=$DIR/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
 
 
