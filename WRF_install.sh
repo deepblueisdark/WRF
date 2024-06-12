@@ -104,15 +104,15 @@ fi
 ##############################Downloading Libraries############################
 if [ "${OPCAO[1]}" -eq 1 ]; then
 cd Downloads
-wget -c https://www.zlib.net/zlib-1.3.1.tar.gz
-wget -c https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.0/src/hdf5-1.12.0.tar.gz
-wget -c https://downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz
-wget -c https://downloads.unidata.ucar.edu/netcdf-fortran/4.6.1/netcdf-fortran-4.6.1.tar.gz
-wget -c https://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-fortran-4.5.3.tar.gz
-wget -c http://www.mpich.org/static/downloads/3.4.1/mpich-3.4.1.tar.gz
-wget -c https://download.sourceforge.net/libpng/libpng-1.6.37.tar.gz
-wget -c https://www.ece.uvic.ca/~frodo/jasper/software/jasper-1.900.1.zip
-wget -c https://sourceforge.net/projects/opengrads/files/grads2/2.2.1.oga.1/Linux%20%2864%20Bits%29/opengrads-2.2.1.oga.1-bundle-x86_64-pc-linux-gnu-glibc_2.17.tar.gz
+wget -nc https://www.zlib.net/zlib-1.3.1.tar.gz
+wget -nc https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.0/src/hdf5-1.12.0.tar.gz
+wget -nc https://downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz
+wget -nc https://downloads.unidata.ucar.edu/netcdf-fortran/4.6.1/netcdf-fortran-4.6.1.tar.gz
+wget -nc https://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-fortran-4.5.3.tar.gz
+wget -nc http://www.mpich.org/static/downloads/3.4.1/mpich-3.4.1.tar.gz
+wget -nc https://download.sourceforge.net/libpng/libpng-1.6.37.tar.gz
+wget -nc https://www.ece.uvic.ca/~frodo/jasper/software/jasper-1.900.1.zip
+wget -nc https://sourceforge.net/projects/opengrads/files/grads2/2.2.1.oga.1/Linux%20%2864%20Bits%29/opengrads-2.2.1.oga.1-bundle-x86_64-pc-linux-gnu-glibc_2.17.tar.gz
 fi 
 
 if [ "$PROMPTOK" -eq 1 ]; then
